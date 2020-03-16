@@ -36,8 +36,11 @@ public class admin extends javax.swing.JFrame {
         
 
         jTable4 = new  javax.swing.JTable();
+        jTable5 = new  javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
+        jScrollPane5 = new javax.swing.JScrollPane();
             table();
+            table2();
         initComponents();
        
         
@@ -89,7 +92,7 @@ public class admin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(310, 540, 122, 49);
+        jButton2.setBounds(310, 580, 122, 49);
 
         jTextField2.setEditable(false);
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
@@ -98,7 +101,7 @@ public class admin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jTextField2);
-        jTextField2.setBounds(470, 540, 125, 50);
+        jTextField2.setBounds(470, 580, 125, 50);
         getContentPane().add(jDateChooser1);
         jDateChooser1.setBounds(440, 20, 170, 30);
         getContentPane().add(jLabel2);
@@ -227,6 +230,47 @@ public class admin extends javax.swing.JFrame {
         
         add(jScrollPane4);   
      }
+     
+     //////////////////////////////////////////////////////////
+     private void table2()
+     {
+        jTable5.setFont(new java.awt.Font("Tahoma", 1, 14)); 
+        jTable5.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"كبده", null, 8, null},
+                {"سجق", null, 6, null},
+                {"هوت_دوج", null, 6, null}
+            },
+            new String [] {
+                "الصنف", "العدد"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable4.setName("");
+        jTable4.getTableHeader().setReorderingAllowed(false);
+        jScrollPane5.setViewportView(jTable5);
+        jScrollPane5.setBounds(10, 450, 880, 80);
+        
+        add(jScrollPane5);   
+     }
+     
+     
     /**
      * @param args the command line arguments
      */
@@ -262,8 +306,8 @@ public class admin extends javax.swing.JFrame {
             }
         });
     }
-     private JTable jTable4;
-    private JScrollPane jScrollPane4;
+     private JTable jTable4,jTable5;
+    private JScrollPane jScrollPane4,jScrollPane5;
     private Connection con;
     private PreparedStatement st;
     // Variables declaration - do not modify//GEN-BEGIN:variables
