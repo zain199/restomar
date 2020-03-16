@@ -7,20 +7,29 @@ package restomar;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author etc
  */
 public class offersand  extends JFrame{
-
+    
+    Date date = new Date();
+    SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
     public offersand() {
         
         creation();
@@ -253,9 +262,51 @@ public class offersand  extends JFrame{
         save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                     
-                offersand.count[0]=Integer.valueOf(ts1.getText());
-                offersand.count[1]=Integer.valueOf(ts2.getText());
-                offersand.count[2]=Integer.valueOf(ts3.getText());
+                    String meal1="كبده";
+                    String meal2="سجق";
+                    String meal3="هوت_دوج";
+                   String dir = System.getProperty("user.dir");
+                    try {
+                        Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+                    con = DriverManager.getConnection("jdbc:derby:"+dir+"\\Rest", "omar", "omar");
+                    }
+                    catch(ClassNotFoundException | SQLException ex) {
+                           JOptionPane.showMessageDialog(getContentPane(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    
+                    String today= s.format(date); 
+                
+                    try {
+                    st = con.prepareStatement("SELECT count(day) FROM OMAR.OFFERS where day = '"+today+"'");
+                    ResultSet res = st.executeQuery();
+                    res.next();
+                    if(res.getInt(1)==0)
+                    {
+                        st = con.prepareStatement("insert into OMAR.OFFERS(day) values ('"+today+"')");
+                        st.execute();
+                    }
+                    } catch (SQLException ex) {
+                               JOptionPane.showMessageDialog(getContentPane(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+               
+                    }
+                    
+                    try {
+                      
+                          st = con.prepareStatement("update OMAR.OFFERS set كبده = (select كبده from omar.offers WHERE day = '"+today+"' )+"+Integer.valueOf(ts1.getText())+" WHERE day = '"+today+"'");
+                          st.executeUpdate();
+                          
+                           st = con.prepareStatement("update OMAR.OFFERS set سجق = (select سجق  from omar.offers WHERE day = '"+today+"' )+"+Integer.valueOf(ts2.getText())+" WHERE day = '"+today+"'");
+                          st.executeUpdate();
+                          
+                           st = con.prepareStatement("update OMAR.OFFERS set هوت_دوج = (select هوت_دوج  from omar.offers WHERE day = '"+today+"' )+"+Integer.valueOf(ts3.getText())+" WHERE day = '"+today+"'");
+                          st.executeUpdate();
+                          
+                          JOptionPane.showMessageDialog(getContentPane(), "DONE", "Message", JOptionPane.INFORMATION_MESSAGE);
+
+                          
+                    } catch (SQLException ex) {
+                          JOptionPane.showMessageDialog(getContentPane(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }  
                                         
             }
         });
@@ -264,7 +315,8 @@ public class offersand  extends JFrame{
     private JLabel background,s1,s2,s3 ;
     private JTextField ts1,ts2,ts3;
     private JButton save,s1plus,s1minus,s2plus,s2minus,s3plus,s3minus;
-    public static int [] count = new int[3];
+     private Connection con;
+    private PreparedStatement st;
     
     //main
     public static void main(String[] args) {

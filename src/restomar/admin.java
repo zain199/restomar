@@ -166,6 +166,23 @@ public class admin extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                       JOptionPane.showMessageDialog(getContentPane(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
+                
+                DefaultTableModel model1 = (DefaultTableModel)jTable5.getModel();
+                
+                try {
+                    st = con.prepareStatement("SELECT * FROM OMAR.OFFERS where day = '"+todayDate+"'");
+                    ResultSet res = st.executeQuery();
+                    res.next();
+                    
+                    for(int i =  0;i<model1.getRowCount();++i)
+                    {
+                        int x = res.getInt((String)model1.getValueAt(i,0));
+                        model1.setValueAt(x, i, 1);
+                    }
+                    
+                } catch (SQLException ex) {
+                      JOptionPane.showMessageDialog(getContentPane(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
         }
         }catch(Exception ex)
         { 

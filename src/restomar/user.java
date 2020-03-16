@@ -2,8 +2,6 @@ package restomar;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.print.PrinterException;
 
 import java.sql.Connection;
@@ -571,6 +569,9 @@ public class user extends JFrame{
                 DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
                 model.addRow(new Object[]{1,btn8.getText().toString(),35});
                 
+                offersand f1 = new offersand();
+                f1.setVisible(true);
+                
             }
         });
     }
@@ -581,6 +582,9 @@ public class user extends JFrame{
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
                 model.addRow(new Object[]{1,btn9.getText().toString(),50});
+                
+                offersand f1 = new offersand();
+                f1.setVisible(true);
                 
             }
         });
@@ -593,6 +597,9 @@ public class user extends JFrame{
                 DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
                 model.addRow(new Object[]{1,btn10.getText().toString(),120});
                 
+                offersand f1 = new offersand();
+                f1.setVisible(true);
+                
             }
         });
     }
@@ -603,6 +610,10 @@ public class user extends JFrame{
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
                 model.addRow(new Object[]{1,offer4.getText().toString(),30});
+                
+                
+                offersand f1 = new offersand();
+                f1.setVisible(true);
                 
             }
         });
